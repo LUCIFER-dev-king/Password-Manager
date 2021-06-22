@@ -1,20 +1,34 @@
-import React, { useState, useContext } from "react";
-import { signUp } from "./helper/authHelper";
+import React, { useState, useContext, useEffect } from "react";
+import { encryptMasterPassword, signUp } from "./helper/authHelper";
 import { Link, useHistory } from "react-router-dom";
+const { v4: uuidv4 } = require("uuid");
 
 const SignUp = () => {
+  const salt = uuidv4();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [encryptedPassword, setEncryptedPassword] = useState("");
 
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
 
-    signUp({ name, email, password }).then((data) => {
-      console.log(data);
-    });
+    //FIXME: encryptedPassword is not working from backend from server side.
+    // So password is used for same purpose.
+    setPassword(encryptMasterPassword(password, salt));
+
+    setEncryptedPassword(encryptMasterPassword(password, salt));
+
+
   };
+
+  useEffect(() => {
+    if (encryptedPassword !== "") {
+      signUp({ name, email, password, salt }).then((data) => {
+        console.log(data);
+      });
+    }
+  }, [encryptedPassword]);
 
   return (
     <div className='container fluid'>
@@ -24,7 +38,7 @@ const SignUp = () => {
       <div className='row'>
         <div className='col-md-4 offset-md-4 mt-5'>
           <section className='text-center'>
-            <h1>E-LEARN</h1>
+            <h1>Password Manager</h1>
 
             <h4 className='p-2'>Create your account</h4>
 
@@ -71,17 +85,7 @@ const SignUp = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {/*TODO: value for checkbox is not added */}
-              <input
-                type='checkbox'
-                className='form-checkbox-input'
-                value={isAdmin}
-                onChange={(e) => setIsAdmin((prev) => !prev)}
-                id='checkBox'
-              />
-              <label htmlFor='checkBox' className='form-check-box px-2 pt-2'>
-                Are your admin?
-              </label>
+
               <button
                 type='button'
                 className='btn btn-secondary w-100 rounded mt-3'

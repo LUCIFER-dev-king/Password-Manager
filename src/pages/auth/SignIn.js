@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./authentication.css";
+import { encryptMasterPassword, signIn } from "./helper/authHelper";
+const { v4: uuidv4 } = require("uuid");
 
 const SignIn = () => {
+  var salt = uuidv4();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSignIn = (e) => {
     e.preventDefault();
+    signIn({ email, password });
+    // console.log(encryptMasterPassword(password,'ebe70491-fe4e-42f0-9140-51e9e4fb42f0'));
   };
 
   return (
@@ -19,7 +23,7 @@ const SignIn = () => {
       <div className='row'>
         <div className='col-md-4 offset-md-4 mt-5'>
           <section className='text-center'>
-            <h1>E-LEARN</h1>
+            <h1>Password Manager</h1>
 
             <h4 className='p-2'>Welcome Back</h4>
 
@@ -55,16 +59,7 @@ const SignIn = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <input
-                type='checkbox'
-                className='form-checkbox-input'
-                value={isAdmin}
-                onChange={(e) => setIsAdmin((prev) => !prev)}
-                id='checkBox'
-              />
-              <label htmlFor='checkBox' className='form-check-box px-2 pt-2'>
-                Are your admin?
-              </label>
+
               <button
                 type='button'
                 onClick={handleSignIn}
