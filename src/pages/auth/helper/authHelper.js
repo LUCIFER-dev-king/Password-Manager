@@ -34,16 +34,59 @@ export const signIn = (user) => {
       if (res.status === 200) {
         const { _id, name, email, salt, password } = res.data.user;
 
-        
         if (encryptMasterPassword(user.password, salt) === password) {
-          console.log("Same");
+          console.log("authenticated");
+
+          return res.data;
+        } else {
+          console.log("Email and Password doesn't match.");
         }
       }
     })
     .catch((err) => console.log(err));
 };
 
+export const authenticate = (data, next) => {
+  if (typeof window !== undefined) {
+    localStorage.setItem("jwt", JSON.stringify(data));
+  }
+  next();
+};
+
+export const signOut = (next) => {
+  if (typeof window !== undefined) {
+    localStorage.removeItem("jwt");
+    next();
+
+    return axios({
+      method: "get",
+      url: `${API}/signout`,
+    })
+      .then((res) => {
+        console.log("Sign Out successful");
+      })
+      .catch((err) => console.log(err));
+  }
+};
+
+export const isAuthenticated = () => {
+  if (typeof window == "undefined") {
+    return false;
+  }
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
+};
+
 export const encryptMasterPassword = (pass, salt) => {
-  var key = pbkdf2.pbkdf2Sync(pass, "08eaefa0-c689-4772-bc2d-fc3f69f76f73", 1000, 32, "sha256");
+  var key = pbkdf2.pbkdf2Sync(
+    pass,
+    "08eaefa0-c689-4772-bc2d-fc3f69f76f73",
+    1000,
+    32,
+    "sha256"
+  );
   return key.toString("hex");
 };

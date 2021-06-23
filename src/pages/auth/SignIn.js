@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./authentication.css";
-import { encryptMasterPassword, signIn } from "./helper/authHelper";
+import {
+  authenticate,
+  encryptMasterPassword,
+  signIn,
+} from "./helper/authHelper";
 const { v4: uuidv4 } = require("uuid");
 
 const SignIn = () => {
@@ -11,7 +15,15 @@ const SignIn = () => {
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    signIn({ email, password });
+    signIn({ email, password }).then((result) => {
+      if (result.error) {
+        console.log("Error occured");
+      } else {
+        authenticate(result, () => {
+          console.log("Signin Succesfull");
+        });
+      }
+    });
     // console.log(encryptMasterPassword(password,'ebe70491-fe4e-42f0-9140-51e9e4fb42f0'));
   };
 
