@@ -5,6 +5,7 @@ import {
   createPasswordVault,
   encryptValues,
   getAPasswordVault,
+  getUser,
 } from "./helper/homeHelper";
 
 const Home = () => {
@@ -17,12 +18,14 @@ const Home = () => {
     // setSite_password(encryptValues(user.password, site_password));
     // setIsDataEncrypted(encryptValues(user.password, site_password));
 
-    getAPasswordVault(
-      user._id,
-      token,
-      "60d33bf3f7ac6763a0f694e4",
-      user.password
-    );
+    // getAPasswordVault(
+    //   user._id,
+    //   token,
+    //   "60d33bf3f7ac6763a0f694e4",
+    //   user.password
+    // );
+
+    getUser(user._id, token);
   };
 
   useEffect(() => {

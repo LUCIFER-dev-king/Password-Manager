@@ -42,3 +42,19 @@ export const getAPasswordVault = (userId, token, passwordValueId, key) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const getUser = (userId, token) => {
+  return axios({
+    method: "get",
+    url: `${API}/user/${userId}`,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
