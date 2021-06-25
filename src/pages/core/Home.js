@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { isAuthenticated } from "../auth/helper/authHelper";
+import Base from "./Base";
 import {
   createPasswordVault,
   encryptValues,
@@ -39,19 +40,21 @@ const Home = () => {
   }, [isDataEncrypted]);
 
   return (
-    <div className='container fluid'>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          type='password'
-          value={site_password}
-          onChange={(e) => setSite_password(e.target.value)}
-        />
+    <Base>
+      <div className='container fluid'>
+        <div>
+          <label htmlFor='password'>Password</label>
+          <input
+            type='password'
+            value={site_password}
+            onChange={(e) => setSite_password(e.target.value)}
+          />
+        </div>
+        <button className='btn btn-dark m-3' onClick={onSubmit}>
+          sumbit
+        </button>
       </div>
-      <button className='btn btn-dark m-3' onClick={onSubmit}>
-        sumbit
-      </button>
-    </div>
+    </Base>
   );
 };
 
