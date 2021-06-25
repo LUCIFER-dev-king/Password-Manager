@@ -41,19 +41,17 @@ const Home = () => {
 
   return (
     <Base>
-      <div className='container fluid'>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            value={site_password}
-            onChange={(e) => setSite_password(e.target.value)}
-          />
-        </div>
-        <button className='btn btn-dark m-3' onClick={onSubmit}>
-          sumbit
-        </button>
+      <div>
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          value={site_password}
+          onChange={(e) => setSite_password(e.target.value)}
+        />
       </div>
+      <button className='btn btn-dark m-3' onClick={onSubmit}>
+        sumbit
+      </button>
     </Base>
   );
 };

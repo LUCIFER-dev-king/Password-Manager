@@ -68,7 +68,7 @@ const Base = ({ children }) => {
         </div>
         <div className='col-md-9'>
           <Header></Header>
-          <div>{children}</div>
+          <div className='bg-dark text-white p-4'>{children}</div>
         </div>
       </div>
     </div>
