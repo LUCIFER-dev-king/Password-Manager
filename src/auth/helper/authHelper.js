@@ -1,4 +1,4 @@
-import { API } from "../../../backend";
+import { API } from "../../backend";
 const axios = require("axios");
 var pbkdf2 = require("pbkdf2");
 const { v4: uuidv4 } = require("uuid");

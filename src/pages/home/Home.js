@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { isAuthenticated } from "../auth/helper/authHelper";
-import Base from "./Base";
+import { isAuthenticated } from "../../auth/helper/authHelper";
+import Base from "../../core/Base";
 import {
   createPasswordVault,
   encryptValues,
