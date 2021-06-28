@@ -12,28 +12,7 @@ const Base = ({ children }) => {
         </div>
         <div className='col-md-9'>
           <Header></Header>
-          <div className='bg-dark text-white p-4'>{children}</div>
-
-          <button
-            type='button'
-            className='position-absolute bottom-0 end-0 m-3 btn btn-danger rounded'
-            data-bs-toggle='modal'
-            data-bs-target='#testModal'
-          >
-            <FaTimes />
-          </button>
-
-          <div
-            class='modal fade'
-            id='testModal'
-            tabindex='-1'
-            aria-labelledby='testModalLabel'
-            aria-hidden='true'
-          >
-            <PopUpModal>
-              <div>From Home</div>
-            </PopUpModal>
-          </div>
+          <div className='p-4'>{children}</div>
         </div>
       </div>
     </div>
