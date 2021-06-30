@@ -1,5 +1,8 @@
 import React from "react";
+import { FaTimes } from "react-icons/fa";
+import PopUpModal from "../../component/PopUpModal";
 import Base from "../../core/Base";
+
 const Notes = () => {
   return (
     <Base>

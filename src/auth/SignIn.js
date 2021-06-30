@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import "./authentication.css";
 import {
   authenticate,
@@ -9,6 +9,7 @@ import {
 const { v4: uuidv4 } = require("uuid");
 
 const SignIn = () => {
+  const history = useHistory();
   var salt = uuidv4();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,13 +17,10 @@ const SignIn = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
     signIn({ email, password }).then((result) => {
-      if (result.error) {
-        console.log("Error occured");
-      } else {
-        authenticate(result, () => {
-          console.log("Signin Succesfull");
-        });
-      }
+      authenticate(result, () => {
+        console.log("Signin Succesfull");
+        history.push("/");
+      });
     });
     // console.log(encryptMasterPassword(password,'ebe70491-fe4e-42f0-9140-51e9e4fb42f0'));
   };

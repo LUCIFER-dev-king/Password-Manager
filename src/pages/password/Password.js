@@ -21,8 +21,8 @@ const Password = () => {
 
   const history = useHistory();
   const onSubmit = () => {
-    // setSite_password(encryptValues(user.password, site_password));
-    // setIsDataEncrypted(encryptValues(user.password, site_password));
+    setSite_password(encryptValues(user.password, site_password));
+    setIsDataEncrypted(encryptValues(user.password, site_password));
     // getAPasswordVault(
     //   user._id,
     //   token,
@@ -42,6 +42,7 @@ const Password = () => {
       createPasswordVault(user._id, token, { site_password }).then((result) => {
         if (result.status == 200) {
           console.log("Encryption saved successful");
+          console.log(result);
         }
       });
     }
