@@ -3,12 +3,15 @@ import Base from "../../core/Base";
 import VaultCard from "../../component/VaultCard";
 import { getUser } from "./helper/homeHelper";
 import { isAuthenticated } from "../../auth/helper/authHelper";
+import { connect } from "react-redux";
+import { setUserVault } from "../../redux/actions";
 
-const Home = () => {
+const Home = ({ setUserVault }) => {
   const { user, token } = isAuthenticated();
   useEffect(() => {
     getUser(user._id, token).then((result) => {
-      console.log(result);
+      // console.log(result.password_vault);
+      setUserVault(result);
     });
   }, []);
   return (
@@ -20,4 +23,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  setUserVault: (uservault) => {
+    dispatch(setUserVault(uservault));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
