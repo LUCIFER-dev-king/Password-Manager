@@ -7,6 +7,7 @@ import {
   MdExitToApp,
   MdNoEncryption,
   MdNote,
+  MdExtension,
 } from "react-icons/md";
 import { signOut } from "../auth/helper/authHelper";
 const SideBar = () => {
@@ -80,7 +81,17 @@ const SideBar = () => {
             </div>
             <div className="sidebar-items-text">Bank Account</div>
           </Link>
+          <a
+            href="https://github.com/LUCIFER-dev-king/password-manager-extension"
+            className="sidebar-items"
+          >
+            <div>
+              <MdExtension className="me-2 fs-5 text-muted" />
+            </div>
+            <span className="sidebar-items-text">Extenstion</span>
+          </a>
         </div>
+
         <div className="sidebar-items" onClick={signOut}>
           <div>
             <MdExitToApp className="me-2 fs-5 text-muted" />
