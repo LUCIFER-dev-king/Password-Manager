@@ -10,16 +10,15 @@ In E Pass we can save credentials like email, password, important notes, bank ac
 - AES256 algorithm is used for encryption and decrytpion of credentials.
 - Deboucing is implemented with help of lodash.deboucing for search functions.
 - To prevent XSS attacks two separate token are used.
-- [https://github.com/LUCIFER-dev-king/password-manager-extension](Chrome Extenstion url).
-- [https://github.com/LUCIFER-dev-king/Password-Manager-Backend](Backend API url).
+- Chrome Extenstion url : [https://github.com/LUCIFER-dev-king/password-manager-extension](Chrome-Extenstion-url).
+- Backend API url : [https://github.com/LUCIFER-dev-king/Password-Manager-Backend](Backend-API-url).
 
 ## Functionlity
 
-- Buy a course.
-- Filter courses
-- Add course to cart.
-- Write review to course.
-- View course videos.
+- Set encrypted password
+- Search password
+- Generate password
+
 
 ## Tech Stack
 
