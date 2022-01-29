@@ -1,155 +1,190 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { isAuthenticated } from "../../auth/helper/authHelper";
 import PopUpModal from "../../component/PopUpModal";
 import Base from "../../core/Base";
+import { decryptValues, encryptValues } from "../../utils/encryptDecrypt";
 import {
   createPasswordVault,
-  encryptValues,
-  getAPasswordVault,
+  deletePasswordVault,
   getPasswordVaults,
-  getUser,
+  updatePasswordVault,
 } from "./helper/passwordHelper";
-import { FaTimes } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import VaultCard from "../../component/VaultCard";
 import { setUserVault } from "../../redux/actions";
 import { connect } from "react-redux";
+import { useHistory } from "react-router";
 
 const Password = ({ setUserVault, UserVault }) => {
-  const { user, token } = isAuthenticated();
-  const [isDataEncrypted, setIsDataEncrypted] = useState("");
-  const [sitePassword, setSitePassword] = useState("");
-  const [vaultName, setVaultName] = useState("");
-  const [siteUrl, setSiteUrl] = useState("");
-  const [siteUsername, setSiteUsername] = useState("");
-  const [passwordVaultList, setPasswordVaultList] = useState([]);
-
+  const { _id } = isAuthenticated();
   const history = useHistory();
-  const onSubmit = () => {
-    setSitePassword(encryptValues(user.password, sitePassword));
-    setSiteUrl(encryptValues(user.password, siteUrl));
-    setSiteUsername(encryptValues(user.password, siteUsername));
-    setVaultName(encryptValues(user.password, vaultName));
-    setIsDataEncrypted(encryptValues(user.password, sitePassword));
+  const [modelToggle, setModelToggle] = useState(false);
+  const [createOrUpdateToggle, setCreateOrUpdateToggle] = useState(false);
+  const passwordVaultItemsList = [
+    "sitePassword",
+    "siteUrl",
+    "siteUsername",
+    "vaultName",
+  ];
+  const initialPasswordVaultValues = {
+    sitePassword: "",
+    siteUrl: "",
+    siteUsername: "",
+    vaultName: "",
+  };
+  const [passwordVaultList, setPasswordVaultList] = useState(
+    initialPasswordVaultValues
+  );
 
-    // getAPasswordVault(
-    //   user._id,
-    //   token,
-    //   "60d33bf3f7ac6763a0f694e4",
-    //   user.password
-    // );
+  const onChangeInputHandler = (e) => {
+    e.preventDefault();
+    const { value, name } = e.target;
+    setPasswordVaultList({
+      ...passwordVaultList,
+      [name]: value,
+    });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    createPasswordVault(_id, passwordVaultList).then((result) => {
+      if (result.status === 200) {
+        console.log("Encryption saved successful");
+        // console.log(result.data.password_vault);
+        setUserVault(result.data.password_vault);
+      }
+    });
+  };
+
+  const setModalVaultPassword = async (passVault) => {
+    let decryptedObject = {
+      siteUrl: "",
+      siteUsername: "",
+      vaultName: "",
+      sitePassword: "",
+    };
+    for (const [key, value] of Object.entries(passVault)) {
+      if (key === "_id" || key === "siteUrl" || key === "vaultName") {
+        decryptedObject[key] = value;
+      } else {
+        let decryptedValue = await decryptValues(_id, value);
+        decryptedObject[key] = decryptedValue;
+      }
+    }
+    setPasswordVaultList(decryptedObject);
+  };
+
+  const onDeletePassVault = (vault) => {
+    deletePasswordVault(_id, vault).then((result) => {
+      if (result.status === 200) {
+        setUserVault(result.data.password_vault);
+      }
+    });
+  };
+
+  const updateHandler = async () => {
+    let enryptedPasswordList = {
+      sitePassword: "",
+      siteUrl: "",
+      siteUsername: "",
+      vaultName: "",
+    };
+    for (const [key, value] of Object.entries(passwordVaultList)) {
+      if (key === "vaultName" || key === "_id") {
+        enryptedPasswordList[key] = value;
+      } else {
+        let encryptedValue = await encryptValues(_id, value);
+        enryptedPasswordList[key] = encryptedValue;
+      }
+    }
+    updatePasswordVault(_id, enryptedPasswordList).then((res) => {
+      if (res.status === 200) {
+        setUserVault(res.data.password_vault);
+      }
+    });
   };
 
   useEffect(() => {
-    getPasswordVaults(user._id, token).then((result) => {
-      if (result) {
-        setUserVault(result);
-        console.log("redux", UserVault);
-        // UserVault.map((k, i) => {
-        //   console.log(k);
-        // });
+    getPasswordVaults(_id).then((result) => {
+      try {
+        if (result.status === 200) {
+          setUserVault(result.data.password_vault);
+          console.log("reduxState", UserVault);
+        }
+      } catch (error) {
+        history.push("/signin");
+        localStorage.removeItem("user");
       }
     });
-
-    if (isDataEncrypted !== "") {
-      createPasswordVault(user._id, token, {
-        sitePassword,
-        siteUrl,
-        siteUsername,
-        vaultName,
-      }).then((result) => {
-        if (result.status == 200) {
-          console.log("Encryption saved successful");
-          // console.log(result);
-          setUserVault(result.data.password_vault);
-        }
-      });
-    }
-  }, [isDataEncrypted]);
+  }, []);
 
   return (
     <Base>
-      <div className='row'>
-        {UserVault !== undefined ? (
-          UserVault.map((pv, id) => <VaultCard />)
-        ) : (
-          <h4>No Passwords Found</h4>
-        )}
-      </div>
+      <div className="container ">
+        <div className="d-flex ms-5 ms-sm-2">
+          {UserVault.length > 0 ? (
+            <div className="mt-5 row">
+              {UserVault.map((passVault, id) => (
+                <div
+                  className="col"
+                  data-bs-toggle={modelToggle ? "modal" : ""}
+                  data-bs-target={modelToggle ? "#testModal" : ""}
+                  key={id}
+                >
+                  <VaultCard
+                    vaultItems={passVault}
+                    setModelToggle={setModelToggle}
+                    decryptItemsInModel={setModalVaultPassword}
+                    onDeletePassVault={onDeletePassVault}
+                    isCreateOrUpdate={setCreateOrUpdateToggle}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <h4>No Passwords Found</h4>
+          )}
+        </div>
 
-      <button
-        type='button'
-        className='position-absolute bottom-0 end-0 m-3 btn btn-danger rounded'
-        data-bs-toggle='modal'
-        data-bs-target='#testModal'
-      >
-        <FaTimes />
-      </button>
+        <button
+          type="button"
+          className="add-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#testModal"
+          onClick={() => {
+            setPasswordVaultList(initialPasswordVaultValues);
+            setCreateOrUpdateToggle(true);
+          }}
+        >
+          <FaPlus />
+        </button>
 
-      <div
-        class='modal fade'
-        id='testModal'
-        tabindex='-1'
-        aria-labelledby='testModalLabel'
-        aria-hidden='true'
-      >
-        <PopUpModal>
-          <div className='d-flex'>
-            <div className='form-group m-1'>
-              <label htmlFor='vault_name'>Vault Name</label>
-              <input
-                id='vault_name'
-                type='text'
-                className='form-control'
-                value={vaultName}
-                onChange={(e) => setVaultName(e.target.value)}
-              />
-            </div>
-            <div className='form-group m-1'>
-              <label htmlFor='site_url'>Website Url</label>
-              <input
-                id='site_url'
-                type='text'
-                className='form-control'
-                value={siteUrl}
-                onChange={(e) => setSiteUrl(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className='d-flex'>
-            <div className='form-group m-1'>
-              <label htmlFor='site_username'>Site Username</label>
-              <input
-                id='site_username'
-                type='text'
-                className='form-control'
-                value={siteUsername}
-                onChange={(e) => setSiteUsername(e.target.value)}
-              />
-            </div>
-            <div className='form-group m-1'>
-              <label htmlFor='sitePassword'>Site Password</label>
-              <input
-                id='sitePassword'
-                type='password'
-                className='form-control'
-                value={sitePassword}
-                onChange={(e) => setSitePassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <button className='btn btn-dark w-100 mt-3' onClick={onSubmit}>
-            Submit
-          </button>
-        </PopUpModal>
+        <div
+          className="modal fade"
+          id="testModal"
+          tabIndex="-1"
+          aria-labelledby="testModalLabel"
+          aria-hidden="true"
+        >
+          <PopUpModal
+            modalTitle="Credentials"
+            setModelToggle={setModelToggle}
+            vaultItems={passwordVaultItemsList}
+            vaultList={passwordVaultList}
+            inputHandler={onChangeInputHandler}
+            onCreate={onSubmit}
+            onUpdate={updateHandler}
+            isCreateOrUpdate={createOrUpdateToggle}
+          />
+        </div>
       </div>
     </Base>
   );
 };
 
 const mapStateToProps = (state) => ({
-  UserVault: state.UserVault[0],
+  UserVault: state.UserVault,
 });
 
 const mapDispatchToProps = (dispatch) => ({

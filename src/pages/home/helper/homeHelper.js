@@ -1,18 +1,18 @@
 import { API } from "../../../backend";
 const axios = require("axios");
 
-export const getUser = (userId, token) => {
+export const getUser = (userId) => {
   return axios({
     method: "get",
     url: `${API}/user/${userId}`,
+    withCredentials: true,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
-      return res.data;
+      return res;
     })
     .catch((err) => console.log(err));
 };

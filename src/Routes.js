@@ -17,14 +17,14 @@ export default function Routes() {
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <PrivateRoute path='/' exact component={Home} />
-          <Route path='/signin' exact component={SignIn} />
-          <Route path='/signup' exact component={SignUp} />
-          <Route path='/password' exact component={Password} />
-          <Route path='/notes' exact component={Notes} />
-          <Route path='/address' exact component={Address} />
-          <Route path='/paymentcards' exact component={PaymentCards} />
-          <Route path='/bankaccount' exact component={BankAccount} />
+          <PrivateRoute path="/" exact component={Home} />
+          <Route path="/signin" exact component={SignIn} />
+          <Route path="/signup" exact component={SignUp} />
+          <Route path="/password" exact component={Password} />
+          <Route path="/notes" exact component={Notes} />
+          <Route path="/address" exact component={Address} />
+          <Route path="/paymentcards" exact component={PaymentCards} />
+          <Route path="/bankaccount" exact component={BankAccount} />
         </Switch>
       </BrowserRouter>
     </Provider>

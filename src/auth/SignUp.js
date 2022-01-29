@@ -1,102 +1,85 @@
-import React, { useState, useContext, useEffect } from "react";
-import { encryptMasterPassword, signUp } from "./helper/authHelper";
+import React, { useState } from "react";
+import { signUp } from "./helper/authHelper";
 import { Link, useHistory } from "react-router-dom";
-const { v4: uuidv4 } = require("uuid");
 
 const SignUp = () => {
-  const salt = uuidv4();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [encryptedPassword, setEncryptedPassword] = useState("");
+  const history = useHistory();
 
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
 
-    //FIXME: encryptedPassword is not working from backend from server side.
-    // So password is used for same purpose.
-    setPassword(encryptMasterPassword(password, salt));
-
-    setEncryptedPassword(encryptMasterPassword(password, salt));
-
-
+    signUp({ name, email, password }).then((res) => {
+      if (res) {
+        history.push("/signin");
+      }
+    });
   };
 
-  useEffect(() => {
-    if (encryptedPassword !== "") {
-      signUp({ name, email, password, salt }).then((data) => {
-        console.log(data);
-      });
-    }
-  }, [encryptedPassword]);
-
   return (
-    <div className='container fluid'>
-      <div className='explore'>
-        <Link to='/learn'>Explore</Link>
+    <div className="container fluid">
+      <div className="explore">
+        <Link to="/learn">Explore</Link>
       </div>
-      <div className='row'>
-        <div className='col-md-4 offset-md-4 mt-5'>
-          <section className='text-center'>
+      <div className="row">
+        <div className="col-md-4 offset-md-4 mt-5">
+          <section className="text-center">
             <h1>Password Manager</h1>
 
-            <h4 className='p-2'>Create your account</h4>
+            <h4 className="p-2">Create your account</h4>
 
             <p>
               Already have an account,
-              <Link to='signin'>
-                <a>Sign Up</a>
-              </Link>
+              <Link to="signin">Sign In</Link>
             </p>
           </section>
 
-          <section className='p-4'>
-            <form action=''>
-              <label className='p-1' htmlFor='name'>
+          <section className="p-4">
+            <form action="">
+              <label className="p-1" htmlFor="name">
                 Name
               </label>
               <input
-                type='text'
-                name='name'
-                id='name'
-                className='form-control p-2'
+                type="text"
+                name="name"
+                id="name"
+                className="form-control p-2"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <label className='p-1' htmlFor='email'>
+              <label className="p-1" htmlFor="email">
                 Email
               </label>
               <input
-                type='email'
-                name='email'
-                id='email'
-                className='form-control p-2'
+                type="email"
+                name="email"
+                id="email"
+                className="form-control p-2"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <label className='p-1 mt-2' htmlFor='password'>
+              <label className="p-1 mt-2" htmlFor="password">
                 Password
               </label>
               <input
-                type='password'
-                name='password'
-                id='password'
-                className='form-control p-2'
+                type="password"
+                name="password"
+                id="password"
+                className="form-control p-2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
 
               <button
-                type='button'
-                className='btn btn-secondary w-100 rounded mt-3'
+                type="button"
+                className="btn btn-secondary w-100 rounded mt-3"
                 onClick={handleSignUpSubmit}
               >
                 Sign Up
               </button>
             </form>
-            <p className='mt-1 text-center'>
-              <a href=''>Forgot password?</a>
-            </p>
           </section>
         </div>
       </div>

@@ -1,17 +1,32 @@
 import React from "react";
-import { FaEdit, FaTrashAlt, FaShare } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
-const VaultCard = () => {
+const VaultCard = ({
+  vaultItems,
+  setModelToggle,
+  decryptItemsInModel,
+  isCreateOrUpdate,
+  onDeletePassVault,
+}) => {
+  const openModal = (e) => {
+    e.preventDefault();
+    decryptItemsInModel(vaultItems);
+    isCreateOrUpdate(false);
+    setModelToggle(true);
+  };
+
   return (
-    <div className='card m-1 p-0' style={{ width: "16rem" }}>
-      <div className='card-body  d-flex justify-content-between'>
+    <div className="card p-0 mt-3 mt-md-0" style={{ width: "16rem" }}>
+      <div className="d-flex p-2 justify-content-between">
         <div>
-          <p>Body Name</p>
+          <p>{vaultItems.vaultName}</p>
         </div>
         <div>
-          <FaEdit className='m-1' />
-          <FaShare className='' />
-          <FaTrashAlt className='m-1' />
+          <FaEdit className="m-1 vault-icon" onClick={openModal} />
+          <FaTrashAlt
+            className="m-1 vault-icon"
+            onClick={() => onDeletePassVault(vaultItems)}
+          />
         </div>
       </div>
     </div>

@@ -1,0 +1,158 @@
+//sidebar
+// <ul className="nav nav-pills flex-column mb-auto text-white">
+//   <li className="nav-item">
+//     {active === "/" ? (
+//       <a className="nav-link active text-white" href="/">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Home
+//       </a>
+//     ) : (
+//       <a className="nav-link text-white" href="/">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Home
+//       </a>
+//     )}
+//   </li>
+//   <li className="nav-item">
+//     {active === "/password" ? (
+//       <Link className="nav-link active text-white" to="/password">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Password
+//       </Link>
+//     ) : (
+//       <Link className="nav-link text-white" to="/password">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Password
+//       </Link>
+//     )}
+//   </li>
+//   <li className="nav-item">
+//     {active === "/notes" ? (
+//       <Link className="nav-link active text-white" to="/notes">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Notes
+//       </Link>
+//     ) : (
+//       <Link className="nav-link text-white" href="/notes">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Notes
+//       </Link>
+//     )}
+//   </li>
+//   <li className="nav-item">
+//     {active === "/address" ? (
+//       <Link className="nav-link active text-white" to="/address">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Address
+//       </Link>
+//     ) : (
+//       <Link className="nav-link text-white" to="/address">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Address
+//       </Link>
+//     )}
+//   </li>
+//   <li className="nav-item">
+//     {active === "/paymentcards" ? (
+//       <Link className="nav-link active text-white" to="/paymentcards">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Payment Cards
+//       </Link>
+//     ) : (
+//       <Link className="nav-link text-white" to="/paymentcards">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Payment Cards
+//       </Link>
+//     )}
+//   </li>
+//   <li className="nav-item">
+//     {active === "/bankaccount" ? (
+//       <Link className="nav-link active text-white" href="/bankaccount">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Bank Account
+//       </Link>
+//     ) : (
+//       <a className="nav-link text-white" href="/bankaccount">
+//         <FaHome className="mb-1" style={{ marginRight: ".5rem" }} />
+//         Bank Account
+//       </a>
+//     )}
+//   </li>
+// </ul>;
+
+// {
+//   UserVault.length > 0 ? (
+//     UserVault[0].map((passVault, id) => (
+//       <div
+//         data-bs-toggle="modal"
+//         data-bs-target="#testModal"
+//         onClick={() => setModalVaultPassword(passVault)}
+//         key={id}
+//       >
+//         <VaultCard />
+//       </div>
+//     ))
+//   ) : (
+//     <h4>No Passwords Found</h4>
+//   );
+// }
+
+// <div className="d-flex">
+// <div className="form-group m-1">
+//   <label htmlFor="vaultName">Vault Name</label>
+//   <input
+//     id="vault_name"
+//     type="text"
+//     name="vaultName"
+//     className="form-control"
+//     value={passwordVaultList.vaultName}
+//     onChange={onChangeInputHandler}
+//   />
+// </div>
+//               <div className="form-group m-1">
+//                 <label htmlFor="siteUrl">Website Url</label>
+//                 <input
+//                   id="site_url"
+//                   type="text"
+//                   name="siteUrl"
+//                   className="form-control"
+//                   value={passwordVaultList.siteUrl}
+//                   onChange={onChangeInputHandler}
+//                 />
+//               </div>
+//             </div>
+//             <div className="d-flex">
+//               <div className="form-group m-1">
+//                 <label htmlFor="siteUsername">Site Username</label>
+//                 <input
+//                   id="site_username"
+//                   type="text"
+//                   name="siteUsername"
+//                   className="form-control"
+//                   value={passwordVaultList.siteUsername}
+//                   onChange={onChangeInputHandler}
+//                 />
+//               </div>
+//               <div className="form-group m-1">
+//                 <label htmlFor="sitePassword">Site Password</label>
+//                 <input
+//                   id="sitePassword"
+//                   type="password"
+//                   className="form-control"
+//                   name="sitePassword"
+//                   value={passwordVaultList.sitePassword}
+//                   onChange={onChangeInputHandler}
+//                 />
+//               </div>
+//             </div>
+
+// export const encryptMasterPassword = (pass, salt) => {
+//     var key = pbkdf2.pbkdf2Sync(
+//       pass,
+//       "08eaefa0-c689-4772-bc2d-fc3f69f76f73",
+//       1000,
+//       32,
+//       "sha256"
+//     );
+//     return key.toString("hex");
+//   };

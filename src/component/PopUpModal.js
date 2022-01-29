@@ -1,22 +1,58 @@
 import React from "react";
 
-const PopUpModal = ({ children }) => {
-  console.log(children);
+const PopUpModal = ({
+  vaultItems,
+  vaultList,
+  inputHandler,
+  modalTitle,
+  setModelToggle,
+  onCreate,
+  onUpdate,
+  isCreateOrUpdate,
+}) => {
   return (
-    <div class='modal-dialog modal-dialog-centered'>
-      <div class='modal-content'>
-        <div class='modal-header'>
-          <h5 class='modal-title' id='testModalLabel'>
-            Modal title
+    <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="testModalLabel">
+            {modalTitle}
           </h5>
           <button
-            type='button'
-            class='btn-close'
-            data-bs-dismiss='modal'
-            aria-label='Close'
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            onClick={() => setModelToggle(false)}
           ></button>
         </div>
-        <div class='modal-body'>{children}</div>
+        <div className="modal-body">
+          <div className="row">
+            {vaultItems.map((value, id) => (
+              <div className="col-6" key={id}>
+                <div className="form-group m-1">
+                  <label htmlFor={value}>{value}</label>
+                  <input
+                    id="vault_name"
+                    type="text"
+                    name={value}
+                    className="form-control"
+                    value={vaultList[value]}
+                    onChange={inputHandler}
+                  />
+                </div>
+              </div>
+            ))}
+            {isCreateOrUpdate ? (
+              <button className="submit-btn w-100 mt-3" onClick={onCreate}>
+                SUBMIT
+              </button>
+            ) : (
+              <button className="submit-btn w-100 mt-3" onClick={onUpdate}>
+                UPDATE
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
