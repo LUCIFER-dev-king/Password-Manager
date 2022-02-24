@@ -8,7 +8,7 @@ E Pass is a password manger inspired from Last Pass. MERN stack is used to build
 
 - AES256 algorithm is used for encryption and decrytpion of credentials.
 - Deboucing is implemented with the help of lodash.deboucing for search functions.
-- To prevent tokens from XSS attack, refresh token and access token are used.
+- Refresh token is used to maintain login state.
 - Chrome Extenstion url : [https://github.com/LUCIFER-dev-king/password-manager-extension](Chrome-Extenstion-url).
 - Backend API url : [https://github.com/LUCIFER-dev-king/Password-Manager-Backend](Backend-API-url).
 
