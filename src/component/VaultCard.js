@@ -12,12 +12,12 @@ const VaultCard = ({
     e.preventDefault();
     decryptItemsInModel(vaultItems);
     isCreateOrUpdate(false);
-    setModelToggle(true);
+    setModelToggle((prev) => !prev);
   };
 
   return (
     <div className="card p-0 mt-3 mt-md-0" style={{ width: "16rem" }}>
-      <div className="d-flex p-2 justify-content-between">
+      <div className="d-flex p-2 justify-content-between align-items-center">
         <div>
           <p>{vaultItems.vaultName}</p>
         </div>

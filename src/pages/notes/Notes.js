@@ -21,6 +21,7 @@ const Notes = ({ setUserVault, UserVault }) => {
   const [modelToggle, setModelToggle] = useState(false);
   const [createOrUpdateToggle, setCreateOrUpdateToggle] = useState(false);
   const notesVaultItemsList = ["notes", "vaultName"];
+  const notesVaultItemsNamesList = ["Notes", "Vault Name"];
   const initialNotesVaultValues = {
     notes: "",
     vaultName: "",
@@ -149,6 +150,7 @@ const Notes = ({ setUserVault, UserVault }) => {
             setModelToggle={setModelToggle}
             vaultItems={notesVaultItemsList}
             vaultList={notesVaultList}
+            vaultItemsLabelList={notesVaultItemsNamesList}
             inputHandler={onChangeInputHandler}
             onCreate={onSubmit}
             onUpdate={updateHandler}

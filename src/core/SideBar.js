@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useHistory } from "react-router-dom";
 import "./core.css";
 import { FaHome, FaBars } from "react-icons/fa";
 import {
@@ -12,11 +12,20 @@ import {
 import { signOut } from "../auth/helper/authHelper";
 const SideBar = () => {
   const location = useLocation();
+  const history = useHistory();
   const [active, setActive] = useState("");
 
   useEffect(() => {
     setActive(location.pathname);
   }, []);
+
+  const onSignOut = () => {
+    signOut().then((res) => {
+      if (res) {
+        history.push("/signin");
+      }
+    });
+  };
 
   return (
     <div className="sidebar">
@@ -84,6 +93,8 @@ const SideBar = () => {
           <a
             href="https://github.com/LUCIFER-dev-king/password-manager-extension"
             className="sidebar-items"
+            target="_blank"
+            rel="noreferrer"
           >
             <div>
               <MdExtension className="me-2 fs-5 text-muted" />
@@ -92,7 +103,7 @@ const SideBar = () => {
           </a>
         </div>
 
-        <div className="sidebar-items" onClick={signOut}>
+        <div className="sidebar-items" onClick={onSignOut}>
           <div>
             <MdExitToApp className="me-2 fs-5 text-muted" />
           </div>

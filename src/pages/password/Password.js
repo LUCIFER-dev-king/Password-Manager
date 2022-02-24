@@ -20,6 +20,12 @@ const Password = ({ setUserVault, UserVault }) => {
   const history = useHistory();
   const [modelToggle, setModelToggle] = useState(false);
   const [createOrUpdateToggle, setCreateOrUpdateToggle] = useState(false);
+  const passwordVaultItemsLabelList = [
+    "Site Password",
+    "Site Url",
+    "Site Username",
+    "Vault Name",
+  ];
   const passwordVaultItemsList = [
     "sitePassword",
     "siteUrl",
@@ -36,6 +42,7 @@ const Password = ({ setUserVault, UserVault }) => {
     initialPasswordVaultValues
   );
 
+  //This handles the onchange of initialPasswordVaultValues
   const onChangeInputHandler = (e) => {
     e.preventDefault();
     const { value, name } = e.target;
@@ -45,18 +52,20 @@ const Password = ({ setUserVault, UserVault }) => {
     });
   };
 
+  //Password are stored to vault
   const onSubmit = async (e) => {
     e.preventDefault();
 
     createPasswordVault(_id, passwordVaultList).then((result) => {
       if (result.status === 200) {
         console.log("Encryption saved successful");
-        // console.log(result.data.password_vault);
         setUserVault(result.data.password_vault);
+        setModelToggle((prev) => !prev);
       }
     });
   };
 
+  //Decrypted passwords showed to user via popupmodel
   const setModalVaultPassword = async (passVault) => {
     let decryptedObject = {
       siteUrl: "",
@@ -75,6 +84,7 @@ const Password = ({ setUserVault, UserVault }) => {
     setPasswordVaultList(decryptedObject);
   };
 
+  //To delete a password from vault
   const onDeletePassVault = (vault) => {
     deletePasswordVault(_id, vault).then((result) => {
       if (result.status === 200) {
@@ -83,6 +93,7 @@ const Password = ({ setUserVault, UserVault }) => {
     });
   };
 
+  //To update existing passwords in vault
   const updateHandler = async () => {
     let enryptedPasswordList = {
       sitePassword: "",
@@ -105,6 +116,7 @@ const Password = ({ setUserVault, UserVault }) => {
     });
   };
 
+  //Fetches password from DB.
   useEffect(() => {
     getPasswordVaults(_id).then((result) => {
       try {
@@ -170,6 +182,7 @@ const Password = ({ setUserVault, UserVault }) => {
           <PopUpModal
             modalTitle="Credentials"
             setModelToggle={setModelToggle}
+            vaultItemsLabelList={passwordVaultItemsLabelList}
             vaultItems={passwordVaultItemsList}
             vaultList={passwordVaultList}
             inputHandler={onChangeInputHandler}

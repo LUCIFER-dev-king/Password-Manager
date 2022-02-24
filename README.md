@@ -4,21 +4,20 @@ E Pass is a password manager inspired by Last Pass.
 
 ## Project Overview
 
-E Pass is a password manger inspired by Last Pass. MERN stack is used to build this project. This project also consists of a chrome extension where it tracks current tab and gives the credentials if exists. Also we generate password with symbols and numbers in that extension.
-In E Pass we can save credentials like email, password, important notes, bank account information. Also we can search through all password list.
+E Pass is a password manger inspired from Last Pass. MERN stack is used to build this project. This project also consists of a chrome extension where it tracks current tab and gives the credentials if exists.In E Pass we can save credentials like email, password, important notes, bank account information. Also we can search through all credentails vault.
 
 - AES256 algorithm is used for encryption and decrytpion of credentials.
-- Deboucing is implemented with help of lodash.deboucing for search functions.
-- To prevent XSS attacks two separate token are used.
+- Deboucing is implemented with the help of lodash.deboucing for search functions.
+- To prevent tokens from XSS attack, refresh token and access token are used.
 - Chrome Extenstion url : [https://github.com/LUCIFER-dev-king/password-manager-extension](Chrome-Extenstion-url).
 - Backend API url : [https://github.com/LUCIFER-dev-king/Password-Manager-Backend](Backend-API-url).
 
 ## Functionlity
 
-- Set encrypted password
-- Search password
-- Generate password
-
+- Encrypt your website password, personel notes, bank account credentials.
+- All vaults has CRUD functionalities.
+- Search a password
+- Generate encrypted password
 
 ## Tech Stack
 

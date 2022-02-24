@@ -9,13 +9,12 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    signIn({ email, password }).then((result) => {
-      // authenticate(result, () => {
-      //   console.log("Signin Succesfull");
-      //   history.push("/");
-      // });
+  const handleSignIn = (testemail, testpass) => {
+    var credentails = {
+      email: email === "" ? testemail : email,
+      password: password === "" ? testpass : password,
+    };
+    signIn(credentails).then((result) => {
       if (result) {
         history.push("/");
       }
@@ -71,6 +70,18 @@ const SignIn = () => {
                 className="btn btn-secondary w-100 rounded mt-3"
               >
                 Sign In
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("test@test.com");
+                  setPassword("123456");
+                  handleSignIn("test@test.com", "123456");
+                }}
+                className="btn btn-secondary w-100 rounded mt-3"
+              >
+                Guest Login
               </button>
             </form>
           </section>

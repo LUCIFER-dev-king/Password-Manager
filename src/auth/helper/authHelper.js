@@ -61,6 +61,7 @@ export const signOut = () => {
     })
       .then((res) => {
         console.log("Sign Out successful");
+        return true;
       })
       .catch((err) => console.log(err));
   }

@@ -9,6 +9,7 @@ const PopUpModal = ({
   onCreate,
   onUpdate,
   isCreateOrUpdate,
+  vaultItemsLabelList,
 }) => {
   return (
     <div className="modal-dialog modal-dialog-centered">
@@ -30,7 +31,7 @@ const PopUpModal = ({
             {vaultItems.map((value, id) => (
               <div className="col-6" key={id}>
                 <div className="form-group m-1">
-                  <label htmlFor={value}>{value}</label>
+                  <label htmlFor={value}>{vaultItemsLabelList[id]}</label>
                   <input
                     id="vault_name"
                     type="text"

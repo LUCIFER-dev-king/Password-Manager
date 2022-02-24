@@ -20,6 +20,14 @@ const BankAccount = ({ setUserVault, UserVault }) => {
   const history = useHistory();
   const [modelToggle, setModelToggle] = useState(false);
   const [createOrUpdateToggle, setCreateOrUpdateToggle] = useState(false);
+  const bankVaultItemsNamesList = [
+    "Bank Name",
+    "Vault Name",
+    "Account Type",
+    "Account Number",
+    "Micr Code",
+    "Customer Id",
+  ];
   const bankVaultItemsList = [
     "bankName",
     "vaultName",
@@ -177,6 +185,7 @@ const BankAccount = ({ setUserVault, UserVault }) => {
             modalTitle="Credentials"
             setModelToggle={setModelToggle}
             vaultItems={bankVaultItemsList}
+            vaultItemsLabelList={bankVaultItemsNamesList}
             vaultList={bankVaultList}
             inputHandler={onChangeInputHandler}
             onCreate={onSubmit}

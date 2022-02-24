@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import debounce from "lodash.debounce";
 import { isAuthenticated } from "../../auth/helper/authHelper";
@@ -11,6 +11,7 @@ const Search = () => {
   const history = useHistory();
   const [notFound, setNotFound] = useState(false);
 
+  //Search for credentials from all vaults
   const searchHandler = (value) => {
     searchQuery(_id, value).then((res) => {
       try {
@@ -30,6 +31,12 @@ const Search = () => {
     () => debounce(searchHandler, 300),
     []
   );
+
+  useEffect(() => {
+    return () => {
+      debounceOnChangeSearchHandler.cancel();
+    };
+  }, []);
   return (
     <div className="ms-5 ms-sm-2 d-flex flex-column">
       <div className="mt-5 col-12 col-md-6  p-1 ">
@@ -50,14 +57,10 @@ const Search = () => {
             color="#fff"
             className="text-left ps-2 w-100 "
           />
-          <FaSearch
-            style={{ cursor: "pointer" }}
-            onClick={searchHandler}
-            className="text-muted"
-          />
+          <FaSearch style={{ cursor: "pointer" }} className="text-muted" />
         </div>
 
-        {searchResult.length > 0 ? (
+        {searchResult.length ? (
           <div
             style={{ backgroundColor: "#fff" }}
             className="w-100 rounded mt-2 py-2 "
@@ -65,7 +68,15 @@ const Search = () => {
             <ul className="p-0 m-0">
               {searchResult.map((res, id) => (
                 <li
-                  onClick={() => history.push("/password")}
+                  onClick={() => {
+                    if (res.sitePassword !== undefined) {
+                      history.push("/password");
+                    } else if (res.notes !== undefined) {
+                      history.push("/notes");
+                    } else if (res.bankName !== undefined) {
+                      history.push("/bankaccount");
+                    }
+                  }}
                   className="searchItem"
                   key={id}
                 >
