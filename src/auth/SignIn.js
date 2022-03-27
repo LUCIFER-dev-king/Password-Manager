@@ -16,6 +16,8 @@ const SignIn = () => {
     };
     signIn(credentails).then((result) => {
       if (result) {
+        var recentItems = [];
+        localStorage.setItem("recentItems", JSON.stringify(recentItems));
         history.push("/");
       }
     });

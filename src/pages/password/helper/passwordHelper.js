@@ -12,11 +12,12 @@ export const createPasswordVault = async (userId, passwordVaultList) => {
     vaultName: "",
   };
   for (const [key, value] of Object.entries(passwordVaultList)) {
-    if (key !== "vaultName") {
+    console.log(key);
+    if (key === "siteUrl" || key === "vaultName") {
+      enryptedPasswordList[key] = value;
+    } else {
       let encryptedValue = await encryptValues(userId, value);
       enryptedPasswordList[key] = encryptedValue;
-    } else {
-      enryptedPasswordList[key] = value;
     }
   }
   return axios({

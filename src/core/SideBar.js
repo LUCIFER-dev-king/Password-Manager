@@ -53,42 +53,46 @@ const SideBar = () => {
             <div>
               <FaHome className="me-2 fs-5" />
             </div>
-            <div className="sidebar-items-text">Home</div>
+            <div className="sidebar-items-text m-0">Home</div>
           </Link>
           <Link
             to="/password"
             className={
-              active === "/password" ? "sidebar-items active" : "sidebar-items"
+              active === "/password"
+                ? "mt-1 sidebar-items active"
+                : "mt-1 sidebar-items"
             }
           >
             <div>
               <MdNoEncryption className="me-2 fs-5" />
             </div>
-            <div className="sidebar-items-text">Passwords</div>
+            <div className="sidebar-items-text m-0">Passwords</div>
           </Link>
           <Link
             to="/notes"
             className={
-              active === "/notes" ? " sidebar-items active" : " sidebar-items"
+              active === "/notes"
+                ? "mt-1 sidebar-items active"
+                : "mt-1 sidebar-items"
             }
           >
             <div>
               <MdNote className="me-2 fs-5" />
             </div>
-            <div className="sidebar-items-text">Notes</div>
+            <div className="sidebar-items-text m-0">Notes</div>
           </Link>
           <Link
             to="/bankaccount"
             className={
               active === "/bankaccount"
-                ? "sidebar-items active"
-                : "sidebar-items"
+                ? "mt-1 sidebar-items active"
+                : "mt-1 sidebar-items"
             }
           >
             <div>
               <MdAccountBalance className="me-2 fs-5" />
             </div>
-            <div className="sidebar-items-text">Bank Account</div>
+            <div className="sidebar-items-text m-0">Bank Account</div>
           </Link>
           <a
             href="https://github.com/LUCIFER-dev-king/password-manager-extension"

@@ -54,6 +54,7 @@ export const authenticate = (data, next) => {
 export const signOut = () => {
   if (typeof window !== undefined) {
     localStorage.removeItem("user");
+    localStorage.removeItem("recentItems");
 
     return axios({
       method: "get",

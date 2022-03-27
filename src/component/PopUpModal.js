@@ -44,11 +44,21 @@ const PopUpModal = ({
               </div>
             ))}
             {isCreateOrUpdate ? (
-              <button className="submit-btn w-100 mt-3" onClick={onCreate}>
+              <button
+                className="submit-btn w-100 mt-3"
+                data-bs-toggle="modal"
+                data-bs-target="#testModal"
+                onClick={onCreate}
+              >
                 SUBMIT
               </button>
             ) : (
-              <button className="submit-btn w-100 mt-3" onClick={onUpdate}>
+              <button
+                className="submit-btn w-100 mt-3"
+                data-bs-toggle="modal"
+                data-bs-target="#testModal"
+                onClick={onUpdate}
+              >
                 UPDATE
               </button>
             )}

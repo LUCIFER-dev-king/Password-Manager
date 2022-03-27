@@ -80,3 +80,7 @@ body {
 .add-btn:hover {
   color: #6923d0;
 }
+
+.hover-card:hover {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}

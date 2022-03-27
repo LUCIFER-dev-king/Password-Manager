@@ -5,6 +5,7 @@ import { decryptValues } from "../../utils/encryptDecrypt";
 import VaultCard from "../../component/VaultCard";
 import { setUserVault } from "../../redux/actions";
 import { connect } from "react-redux";
+import { colorCodes } from "../../utils/colorCodes";
 import PopUpModal from "../../component/PopUpModal";
 import Base from "../../core/Base";
 import {
@@ -14,6 +15,7 @@ import {
   createNotesVault,
 } from "./helper/notesHelper";
 import { useHistory } from "react-router";
+import { deleteRecentItems } from "../../utils";
 
 const Notes = ({ setUserVault, UserVault }) => {
   const { _id } = isAuthenticated();
@@ -42,6 +44,8 @@ const Notes = ({ setUserVault, UserVault }) => {
       if (result.status === 200) {
         console.log("Encryption saved successful");
         // console.log(result.data.password_vault);
+        setModelToggle(false);
+
         setUserVault(result.data.notes_vault);
       } else if (result.status === 403) {
         history.push("/signin");
@@ -71,6 +75,7 @@ const Notes = ({ setUserVault, UserVault }) => {
     deleteNotesVault(_id, vault).then((result) => {
       if (result.status === 200) {
         setUserVault(result.data.notes_vault);
+        deleteRecentItems(vault);
       }
     });
   };
@@ -79,6 +84,7 @@ const Notes = ({ setUserVault, UserVault }) => {
     updateNotesVault(_id, notesVaultList).then((res) => {
       if (res.status === 200) {
         setUserVault(res.data.notes_vault);
+        setModelToggle((prev) => !prev);
       }
     });
   };
@@ -103,18 +109,14 @@ const Notes = ({ setUserVault, UserVault }) => {
           {UserVault.length > 0 ? (
             <div className="mt-5 row">
               {UserVault.map((notesVault, id) => (
-                <div
-                  data-bs-toggle={modelToggle ? "modal" : ""}
-                  data-bs-target={modelToggle ? "#testModal" : ""}
-                  key={id}
-                  className="col"
-                >
+                <div key={id} className="col">
                   <VaultCard
                     vaultItems={notesVault}
                     setModelToggle={setModelToggle}
                     decryptItemsInModel={setModalVaultPassword}
                     onDeletePassVault={onDeleteNotesVault}
                     isCreateOrUpdate={setCreateOrUpdateToggle}
+                    colorCode={id > 7 ? colorCodes[5] : colorCodes[id]}
                   />
                 </div>
               ))}

@@ -14,6 +14,8 @@ import VaultCard from "../../component/VaultCard";
 import { setUserVault } from "../../redux/actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
+import { colorCodes } from "../../utils/colorCodes";
+import { deleteRecentItems } from "../../utils";
 
 const Password = ({ setUserVault, UserVault }) => {
   const { _id } = isAuthenticated();
@@ -58,7 +60,7 @@ const Password = ({ setUserVault, UserVault }) => {
 
     createPasswordVault(_id, passwordVaultList).then((result) => {
       if (result.status === 200) {
-        console.log("Encryption saved successful");
+        console.log("Encryption saved successful", result.data.password_vault);
         setUserVault(result.data.password_vault);
         setModelToggle((prev) => !prev);
       }
@@ -86,9 +88,11 @@ const Password = ({ setUserVault, UserVault }) => {
 
   //To delete a password from vault
   const onDeletePassVault = (vault) => {
+    console.log(vault);
     deletePasswordVault(_id, vault).then((result) => {
       if (result.status === 200) {
         setUserVault(result.data.password_vault);
+        deleteRecentItems(vault);
       }
     });
   };
@@ -102,7 +106,7 @@ const Password = ({ setUserVault, UserVault }) => {
       vaultName: "",
     };
     for (const [key, value] of Object.entries(passwordVaultList)) {
-      if (key === "vaultName" || key === "_id") {
+      if (key === "vaultName" || key === "_id" || key === "siteUrl") {
         enryptedPasswordList[key] = value;
       } else {
         let encryptedValue = await encryptValues(_id, value);
@@ -112,6 +116,7 @@ const Password = ({ setUserVault, UserVault }) => {
     updatePasswordVault(_id, enryptedPasswordList).then((res) => {
       if (res.status === 200) {
         setUserVault(res.data.password_vault);
+        setModelToggle((prev) => !prev);
       }
     });
   };
@@ -138,24 +143,20 @@ const Password = ({ setUserVault, UserVault }) => {
           {UserVault.length > 0 ? (
             <div className="mt-5 row">
               {UserVault.map((passVault, id) => (
-                <div
-                  className="col"
-                  data-bs-toggle={modelToggle ? "modal" : ""}
-                  data-bs-target={modelToggle ? "#testModal" : ""}
-                  key={id}
-                >
+                <div className="col" key={id}>
                   <VaultCard
                     vaultItems={passVault}
                     setModelToggle={setModelToggle}
                     decryptItemsInModel={setModalVaultPassword}
                     onDeletePassVault={onDeletePassVault}
                     isCreateOrUpdate={setCreateOrUpdateToggle}
+                    colorCode={id > 7 ? colorCodes[5] : colorCodes[id]}
                   />
                 </div>
               ))}
             </div>
           ) : (
-            <h4>No Passwords Found</h4>
+            <h4 className="mt-3">No Passwords Found</h4>
           )}
         </div>
 

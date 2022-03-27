@@ -43,6 +43,7 @@
   font-weight: 500;
   white-space: nowrap;
   opacity: 0;
+  margin-top: 0;
 }
 
 .sidebar-items:hover {

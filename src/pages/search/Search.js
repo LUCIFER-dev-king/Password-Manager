@@ -38,11 +38,14 @@ const Search = () => {
     };
   }, []);
   return (
-    <div className="ms-5 ms-sm-2 d-flex flex-column">
-      <div className="mt-5 col-12 col-md-6  p-1 ">
+    <div
+      className="ms-5 ms-sm-2 d-flex flex-column w-100"
+      style={{ zIndex: "5" }}
+    >
+      <div className="col-12 col-md-6 py-2 position-relative">
         <div
-          style={{ backgroundColor: "#fff" }}
-          className="d-flex py-2 px-1 rounded align-items-center"
+          style={{ backgroundColor: "#f4f0fa" }}
+          className="d-flex py-2 px-1 rounded align-items-center "
         >
           <input
             style={{
@@ -63,7 +66,7 @@ const Search = () => {
         {searchResult.length ? (
           <div
             style={{ backgroundColor: "#fff" }}
-            className="w-100 rounded mt-2 py-2 "
+            className="w-100 mt-2 rounded position-absolute shadow z-5"
           >
             <ul className="p-0 m-0">
               {searchResult.map((res, id) => (

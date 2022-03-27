@@ -14,6 +14,8 @@ import {
   updateBankVault,
 } from "./helper/bankAccountHelper";
 import { useHistory } from "react-router";
+import { colorCodes } from "../../utils/colorCodes";
+import { deleteRecentItems } from "../../utils";
 
 const BankAccount = ({ setUserVault, UserVault }) => {
   const { _id } = isAuthenticated();
@@ -60,7 +62,7 @@ const BankAccount = ({ setUserVault, UserVault }) => {
       try {
         if (result.status === 200) {
           setUserVault(result.data.bank_account_vault);
-          setModelToggle(false);
+          setModelToggle((prev) => !prev);
         }
       } catch (error) {
         history.push("/signin");
@@ -93,7 +95,7 @@ const BankAccount = ({ setUserVault, UserVault }) => {
     deleteBankVault(_id, vault).then((result) => {
       if (result.status === 200) {
         setUserVault(result.data.bank_account_vault);
-        setModelToggle(false);
+        deleteRecentItems(vault);
       }
     });
   };
@@ -118,7 +120,7 @@ const BankAccount = ({ setUserVault, UserVault }) => {
     updateBankVault(_id, encryptedBankVaultValues).then((res) => {
       if (res.status === 200) {
         setUserVault(res.data.bank_account_vault);
-        setModelToggle(false);
+        setModelToggle((prev) => !prev);
       }
     });
   };
@@ -140,18 +142,14 @@ const BankAccount = ({ setUserVault, UserVault }) => {
           {UserVault.length > 0 ? (
             <div className="mt-5 row">
               {UserVault.map((bankVault, id) => (
-                <div
-                  className="col"
-                  data-bs-toggle={modelToggle ? "modal" : ""}
-                  data-bs-target={modelToggle ? "#testModal" : ""}
-                  key={id}
-                >
+                <div className="col" key={id}>
                   <VaultCard
                     vaultItems={bankVault}
                     setModelToggle={setModelToggle}
                     decryptItemsInModel={setModalVaultPassword}
                     onDeletePassVault={onDeleteBankVault}
                     isCreateOrUpdate={setCreateOrUpdateToggle}
+                    colorCode={id > 7 ? colorCodes[5] : colorCodes[id]}
                   />
                 </div>
               ))}
